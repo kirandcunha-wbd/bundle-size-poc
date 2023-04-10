@@ -1,26 +1,39 @@
-// Test import of a JavaScript module
-import { example } from '@/js/example'
-
-// Test import of an asset
-import webpackLogo from '@/images/webpack-logo.svg'
-
 // Test import of styles
 import '@/styles/index.scss'
 
-// Appending to the DOM
-const logo = document.createElement('img')
-logo.src = webpackLogo
+let shaka;
 
-const heading = document.createElement('h1')
-heading.textContent = example()
+if (!localStorage.count) {
+    localStorage.count = 1
+}
 
-// Test a background image url in CSS
-const imageBackground = document.createElement('div')
-imageBackground.classList.add('image')
+const version = ++localStorage.count % 3
 
-// Test a public folder asset
-const imagePublic = document.createElement('img')
-imagePublic.src = '/assets/example.png'
+switch (version) {
+    case 0:
+        import(`shaka-player-4.3.5`).then((e) => {
+            shaka = e
+            done()
+        });
+        break
+    case 1:
+        import(`shaka-player-2.5.10`).then((e) => {
+            shaka = e
+            done()
+        });
+        break
+    case 2:
+        import(`shaka-player-3.3.0`).then((e) => {
+            shaka = e
+            done()
+        });
+        break
+}
 
-const app = document.querySelector('#root')
-app.append(logo, heading, imageBackground, imagePublic)
+function done() {
+    const heading = document.createElement('h1')
+    heading.textContent = "Shaka version " + shaka?.Player?.version
+
+    const app = document.querySelector('#root')
+    app.append(heading)
+}

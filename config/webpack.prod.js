@@ -4,6 +4,8 @@ const { merge } = require('webpack-merge')
 
 const paths = require('./paths')
 const common = require('./webpack.common')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 module.exports = merge(common, {
   mode: 'production',
@@ -39,6 +41,7 @@ module.exports = merge(common, {
       filename: 'styles/[name].[contenthash].css',
       chunkFilename: '[id].css',
     }),
+    new BundleAnalyzerPlugin()
   ],
   optimization: {
     minimize: true,
