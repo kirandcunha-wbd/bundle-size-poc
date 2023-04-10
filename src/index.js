@@ -32,6 +32,7 @@ switch (version) {
 
 function done() {
     const heading = document.createElement('h1')
+    window.shaka = shaka
     heading.textContent = "Shaka version " + shaka?.Player?.version
 
     const app = document.querySelector('#root')
